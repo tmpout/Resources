@@ -129,3 +129,7 @@ https://n0.lol/ebm/1.html
 https://n0.lol/ebm/2.html
 https://n0.lol/ebm/3.html
 https://n0.lol/ebm/4.html
+https://labs.portcullis.co.uk/blog/fixing-the-links-hardening-the-linker/
+https://labs.portcullis.co.uk/presentations/breaking-the-links-exploiting-the-linker/
+http://www.nth-dimension.org.uk/pub/BTL.pdf
+https://github.com/0xricksanchez/paper_collection
