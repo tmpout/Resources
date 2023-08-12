@@ -15,6 +15,8 @@ These links appear in no particular order, and some remain unsorted:
 
 * [http://gajastechnologies.blogspot.com/2016/12/how-to-create-virus-using-assembly.html](https://web.archive.org/web/20210419095151/https://gajastechnologies.blogspot.com/2016/12/how-to-create-virus-using-assembly.html)
 
+* [http://notes.eatonphil.com/emulating-amd64-starting-with-elf.html?s=09](https://web.archive.org/web/20210420204709/https://notes.eatonphil.com/emulating-amd64-starting-with-elf.html?s=09)
+
 ## Tools
 
 * [http://github.com/eliben/pyelftools/blob/master/elftools/elf/elffile.py](https://web.archive.org/web/20210419083854/https://github.com/eliben/pyelftools/blob/master/elftools/elf/elffile.py)
@@ -23,7 +25,13 @@ These links appear in no particular order, and some remain unsorted:
 
 * [http://github.com/sad0p/go-readelf](https://web.archive.org/web/20210419093929/https://github.com/sad0p/go-readelf)
 
-* [http://github.com/elfmaster/dt_infect](https://web.archive.org/web/20200914173736/https://github.com/elfmaster/dt_infect)   
+* [http://github.com/elfmaster/dt_infect](https://web.archive.org/web/20200914173736/https://github.com/elfmaster/dt_infect)
+
+* [http://github.com/NickStephens/elfit](https://web.archive.org/web/20201206045654/https://github.com/NickStephens/elfit)
+
+* [http://www.muppetlabs.com/~breadbox/software/elfkickers.html](http://web.archive.org/web/20210415105836/https://www.muppetlabs.com/~breadbox/software/elfkickers.html)
+
+* [http://github.com/xoreaxeaxeax/sandsifter](https://web.archive.org/web/20210414205810/https://github.com/xoreaxeaxeax/sandsifter)  
 
 ## Abuse & Exploitation
 
@@ -43,7 +51,16 @@ These links appear in no particular order, and some remain unsorted:
 
 * [http://tms.dicp.de/~alba/virus-writing-HOWTO/_html/index.html](https://web.archive.org/web/20180819154725/http://tms.dicp.de/~alba/virus-writing-HOWTO/_html/index.html)
 
+* [http://github.com/geekaaron/elf64-hijack](https://web.archive.org/web/20201030055654/https://github.com/geekaaron/elf64-hijack)
+
+* [http://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/](https://web.archive.org/web/20210203085055/https://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/)  
+
 ## Analysis
+
+
+* [http://linux-audit.com/elf-binaries-on-linux-understanding-and-analysis/](http://web.archive.org/web/20210408041624/https://linux-audit.com/elf-binaries-on-linux-understanding-and-analysis/)  
+
+* [http://www.intezer.com/blog/malware-analysis/elf-malware-analysis-101-initial-analysis/](http://web.archive.org/web/20210419090950/https://www.intezer.com/blog/malware-analysis/elf-malware-analysis-101-initial-analysis/)
 
 ## CTFs & Practice
 
@@ -71,12 +88,10 @@ These links appear in no particular order, and some remain unsorted:
 
 ## Unsorted
 
-[http://github.com/NickStephens/elfit](https://web.archive.org/web/20201206045654/https://github.com/NickStephens/elfit)  
+
 [http://twitter.com/s01den/status/1290600208582299648](http://web.archive.org/web/20200804104928/https://twitter.com/s01den/status/1290600208582299648)  
-[http://nvd.nist.gov/vuln/detail/CVE-2020-16269](https://web.archive.org/web/20210320134317/https://nvd.nist.gov/vuln/detail/CVE-2020-16269)  
-[http://www.muppetlabs.com/~breadbox/software/elfkickers.html](http://web.archive.org/web/20210415105836/https://www.muppetlabs.com/~breadbox/software/elfkickers.html)  
-[http://linux-audit.com/elf-binaries-on-linux-understanding-and-analysis/](http://web.archive.org/web/20210408041624/https://linux-audit.com/elf-binaries-on-linux-understanding-and-analysis/)  
-[http://www.intezer.com/blog/malware-analysis/elf-malware-analysis-101-initial-analysis/](http://web.archive.org/web/20210419090950/https://www.intezer.com/blog/malware-analysis/elf-malware-analysis-101-initial-analysis/)  
+
+  
 [http://blogs.oracle.com/solaris/how-to-strip-an-elf-object-without-fully-understanding-it-v2](http://web.archive.org/web/20210419092109/https://blogs.oracle.com/solaris/how-to-strip-an-elf-object-without-fully-understanding-it-v2)  
 [http://www.goldsborough.me/c/low-level/kernel/2016/08/29/16-48-53-the_-ld_preload-_trick/](https://web.archive.org/web/20210125064407/http://www.goldsborough.me/c/low-level/kernel/2016/08/29/16-48-53-the_-ld_preload-_trick/)  
 [http://www.kernel.org/doc/Documentation/trace/ftrace.txt](https://web.archive.org/web/20210227013457/https://www.kernel.org/doc/Documentation/trace/ftrace.txt)  
@@ -86,7 +101,7 @@ These links appear in no particular order, and some remain unsorted:
 [http://virus.enemy.org/virus-writing-HOWTO/_html/](https://web.archive.org/web/20210211234312/http://virus.enemy.org/virus-writing-HOWTO/_html/)  
 [http://www.wiw.org/~meta/vlad.php?read=ARTICLE.2_4&issue=7&desc=STAOG%20Linux%20Virus](https://web.archive.org/web/20190518052046/http://www.wiw.org/~meta/vlad.php?read=ARTICLE.2_4&issue=7&desc=STAOG%20Linux%20Virus)  
 [http://github.com/xcellerator/linux_kernel_hacking/tree/master/3_RootkitTechniques/3.3_set_root](https://web.archive.org/web/20201105010652/https://github.com/xcellerator/linux_kernel_hacking/tree/master/3_RootkitTechniques/3.3_set_root)  
-[http://github.com/geekaaron/elf64-hijack](https://web.archive.org/web/20201030055654/https://github.com/geekaaron/elf64-hijack)  
+ 
 [http://blog.fbkcs.ru/elf-in-memory-execution/](https://web.archive.org/web/20210121204148/https://blog.fbkcs.ru/elf-in-memory-execution/)  
 [http://vxheaven.org/lib/vhe02.html](https://web.archive.org/web/20160408084706/http://vxheaven.org/lib/vhe02.html)  
 [http://vxheaven.org/lib/vhe06.html](https://web.archive.org/web/20160408084703/http://vxheaven.org/lib/vhe06.html)  
@@ -106,7 +121,7 @@ These links appear in no particular order, and some remain unsorted:
 [http://raw.githubusercontent.com/mozilla/positron/master/build/unix/elfhack/elfhack.cpp](https://web.archive.org/web/20210419093656/https://raw.githubusercontent.com/mozilla/positron/master/build/unix/elfhack/elfhack.cpp)  
 [http://www.sad0p-re.org/](https://web.archive.org/web/20210414063022/https://www.sad0p-re.org/)  
 [http://www.drkns.net/kernel-who-does-magic/](https://web.archive.org/web/20210419093724/https://www.drkns.net/kernel-who-does-magic/)  
-[http://github.com/xoreaxeaxeax/sandsifter](https://web.archive.org/web/20210414205810/https://github.com/xoreaxeaxeax/sandsifter)  
+
 [http://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/](https://web.archive.org/web/20210203085055/https://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/)  
 [http://lkmidas.github.io/posts/20210128-linux-kernel-pwn-part-2/](https://web.archive.org/web/20210201154456/https://lkmidas.github.io/posts/20210128-linux-kernel-pwn-part-2/)  
 [http://phobosys.de/blog_january_21.html](https://web.archive.org/web/20210123081132/http://phobosys.de/blog_january_21.html)  
@@ -143,7 +158,7 @@ These links appear in no particular order, and some remain unsorted:
 [http://cirosantilli.com/elf-hello-world](https://web.archive.org/web/20201124201402/https://cirosantilli.com/elf-hello-world)  
 [http://www.conradk.com/codebase/2017/05/28/elf-from-scratch/](https://web.archive.org/web/20210420204128/https://www.conradk.com/codebase/2017/05/28/elf-from-scratch/)  
 [http://www.kitploit.com/2021/01/drow-injects-code-into-elf-executables.html?m=1&s=09](https://web.archive.org/web/20210420204539/https://www.kitploit.com/2021/01/drow-injects-code-into-elf-executables.html?m=1&s=09)  
-[http://notes.eatonphil.com/emulating-amd64-starting-with-elf.html?s=09](https://web.archive.org/web/20210420204709/https://notes.eatonphil.com/emulating-amd64-starting-with-elf.html?s=09)  
+  
 [http://www.goldsborough.me/c/low-level/kernel/2016/08/29/16-48-53-the_-ld_preload-_trick/](https://web.archive.org/web/20210125064407/https://www.goldsborough.me/c/low-level/kernel/2016/08/29/16-48-53-the_-ld_preload-_trick/)  
 [http://fluxius.handgrep.se/2011/10/20/the-art-of-elf-analysises-and-exploitations/](https://web.archive.org/web/20210126220816/http://fluxius.handgrep.se/2011/10/20/the-art-of-elf-analysises-and-exploitations/)  
 [http://fasterthanli.me/series/making-our-own-executable-packer/part-1](https://web.archive.org/web/20210228204657/https://fasterthanli.me/series/making-our-own-executable-packer/part-1)  
@@ -170,7 +185,7 @@ These links appear in no particular order, and some remain unsorted:
 [http://syscall.sh/](https://web.archive.org/web/20201118151448/https://syscall.sh/)  
   
 [http://blog.w4kfu.com/](https://web.archive.org/web/20210120041554/http://blog.w4kfu.com/)  
-[http://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/](https://web.archive.org/web/20210203085055/https://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/)  
+
 [http://github.com/MrCheeze/pokered-self-replicator](https://web.archive.org/web/20200917104402/https://github.com/MrCheeze/pokered-self-replicator)  
 [http://www.exploit-db.com/papers?author=8947](https://web.archive.org/web/20190412213220/https://www.exploit-db.com/papers?author=8947)  
 [http://github.com/pallada-92/dna-3d-engine](https://web.archive.org/web/20201212225245/https://github.com/pallada-92/dna-3d-engine)  
