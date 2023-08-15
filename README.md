@@ -53,7 +53,9 @@ These links appear in no particular order, and some remain unsorted:
 
 * [http://github.com/geekaaron/elf64-hijack](https://web.archive.org/web/20201030055654/https://github.com/geekaaron/elf64-hijack)
 
-* [http://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/](https://web.archive.org/web/20210203085055/https://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/)  
+* [http://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/](https://web.archive.org/web/20210203085055/https://lkmidas.github.io/posts/20210123-linux-kernel-pwn-part-1/)
+
+* [http://github.com/xcellerator/linux_kernel_hacking/tree/master/3_RootkitTechniques](https://web.archive.org/web/20210419092346/https://github.com/xcellerator/linux_kernel_hacking/tree/master/3_RootkitTechniques)  
 
 ## Analysis
 
@@ -61,6 +63,8 @@ These links appear in no particular order, and some remain unsorted:
 * [http://linux-audit.com/elf-binaries-on-linux-understanding-and-analysis/](http://web.archive.org/web/20210408041624/https://linux-audit.com/elf-binaries-on-linux-understanding-and-analysis/)  
 
 * [http://www.intezer.com/blog/malware-analysis/elf-malware-analysis-101-initial-analysis/](http://web.archive.org/web/20210419090950/https://www.intezer.com/blog/malware-analysis/elf-malware-analysis-101-initial-analysis/)
+
+* [http://fluxius.handgrep.se/2011/10/20/the-art-of-elf-analysises-and-exploitations/](https://web.archive.org/web/20210126220816/http://fluxius.handgrep.se/2011/10/20/the-art-of-elf-analysises-and-exploitations/)  
 
 ## CTFs & Practice
 
@@ -81,6 +85,14 @@ These links appear in no particular order, and some remain unsorted:
 
 * [http://www.phrack.org/issues/56/7.html](https://web.archive.org/web/20200915075531/http://www.phrack.org/issues/56/7.html)
 
+* [http:https://n0.lol/ebm/1.html](https://n0.lol/ebm/1.html)
+
+* [http:https://n0.lol/ebm/2.html](https://n0.lol/ebm/2.html)
+
+* [http:https://n0.lol/ebm/3.html](https://n0.lol/ebm/3.html)
+
+* [http:https://n0.lol/ebm/4.html](https://n0.lol/ebm/4.html)
+
 
 ## Videos
 
@@ -97,7 +109,7 @@ These links appear in no particular order, and some remain unsorted:
 [http://www.kernel.org/doc/Documentation/trace/ftrace.txt](https://web.archive.org/web/20210227013457/https://www.kernel.org/doc/Documentation/trace/ftrace.txt)  
 [http://github.com/torvalds/linux/blob/master/fs/binfmt_elf.c](http://web.archive.org/web/20210127022339/https://github.com/torvalds/linux/blob/master/fs/binfmt_elf.c)  
 [http://repository.root-me.org/Virologie/EN%20-%20Linux%20viruses%20%E2%80%93%20ELF%20file%20format.pdf](https://web.archive.org/web/20191029141000/http://repository.root-me.org/Virologie/EN%20-%20Linux%20viruses%20%E2%80%93%20ELF%20file%20format.pdf)  
-[http://github.com/xcellerator/linux_kernel_hacking/tree/master/3_RootkitTechniques](https://web.archive.org/web/20210419092346/https://github.com/xcellerator/linux_kernel_hacking/tree/master/3_RootkitTechniques)  
+
 [http://virus.enemy.org/virus-writing-HOWTO/_html/](https://web.archive.org/web/20210211234312/http://virus.enemy.org/virus-writing-HOWTO/_html/)  
 [http://www.wiw.org/~meta/vlad.php?read=ARTICLE.2_4&issue=7&desc=STAOG%20Linux%20Virus](https://web.archive.org/web/20190518052046/http://www.wiw.org/~meta/vlad.php?read=ARTICLE.2_4&issue=7&desc=STAOG%20Linux%20Virus)  
 [http://github.com/xcellerator/linux_kernel_hacking/tree/master/3_RootkitTechniques/3.3_set_root](https://web.archive.org/web/20201105010652/https://github.com/xcellerator/linux_kernel_hacking/tree/master/3_RootkitTechniques/3.3_set_root)  
@@ -158,17 +170,14 @@ These links appear in no particular order, and some remain unsorted:
 [http://cirosantilli.com/elf-hello-world](https://web.archive.org/web/20201124201402/https://cirosantilli.com/elf-hello-world)  
 [http://www.conradk.com/codebase/2017/05/28/elf-from-scratch/](https://web.archive.org/web/20210420204128/https://www.conradk.com/codebase/2017/05/28/elf-from-scratch/)  
 [http://www.kitploit.com/2021/01/drow-injects-code-into-elf-executables.html?m=1&s=09](https://web.archive.org/web/20210420204539/https://www.kitploit.com/2021/01/drow-injects-code-into-elf-executables.html?m=1&s=09)  
-  
 [http://www.goldsborough.me/c/low-level/kernel/2016/08/29/16-48-53-the_-ld_preload-_trick/](https://web.archive.org/web/20210125064407/https://www.goldsborough.me/c/low-level/kernel/2016/08/29/16-48-53-the_-ld_preload-_trick/)  
-[http://fluxius.handgrep.se/2011/10/20/the-art-of-elf-analysises-and-exploitations/](https://web.archive.org/web/20210126220816/http://fluxius.handgrep.se/2011/10/20/the-art-of-elf-analysises-and-exploitations/)  
 [http://fasterthanli.me/series/making-our-own-executable-packer/part-1](https://web.archive.org/web/20210228204657/https://fasterthanli.me/series/making-our-own-executable-packer/part-1)  
 [http://redcanary.com/blog/heavens-gate-technique-on-linux/](https://web.archive.org/web/20210204032212/https://redcanary.com/blog/heavens-gate-technique-on-linux/)  
 [http://www.exploit-db.com/papers/14087/](https://web.archive.org/web/20140726192450/http://www.exploit-db.com/papers/14087/)  
 [http://github.com/cloudsec/elfpack/blob/master/elfpack.s](https://web.archive.org/web/20210420205707/https://github.com/cloudsec/elfpack/blob/master/elfpack.s)  
 [http://mbobrowski.org/research/runtime-process-infection-via-plt-got.html](https://web.archive.org/web/20210420205936/https://mbobrowski.org/research/runtime-process-infection-via-plt-got.html)  
- 
 [http://kishuagarwal.github.io/life-of-a-binary.html](https://web.archive.org/web/20210413134713/https://kishuagarwal.github.io/life-of-a-binary.html)  
-[http://stffrdhrn.github.io/hardware/embedded/openrisc/2019/11/29/relocs.html](https://web.archive.org/web/20201107193320/https://stffrdhrn.github.io/hardware/embedded/openrisc/2019/11/29/relocs.html)  
+[http://stffrdhrn.github.io/hardware/embedded/openrisc/2019/11/29/relocs.html](https://web.archive.org/web/20201107193320/https://stffrdhrn.github.io/hardware/embedded/openrisc/2019/11/29/relocs.html) 
 [http://github.com/elfmaster/libelfmaster](https://web.archive.org/web/20200909184658/https://github.com/elfmaster/libelfmaster)  
 [http://github.com/ulexec/Linux.RV/blob/master/rv.asm](https://web.archive.org/web/20210420210500/https://github.com/ulexec/Linux.RV/blob/master/rv.asm)  
 [http://www.nytimes.com/2004/02/08/magazine/the-virus-underground.html](https://web.archive.org/web/20210411034217/https://www.nytimes.com/2004/02/08/magazine/the-virus-underground.html)  
@@ -183,18 +192,10 @@ These links appear in no particular order, and some remain unsorted:
 [http://github.com/youben11/silvio-text-infect/blob/master/silvio_64.c](https://web.archive.org/web/20210420211003/https://github.com/youben11/silvio-text-infect/blob/master/silvio_64.c)  
 [http://magisterquis.github.io/2018/03/31/in-memory-only-elf-execution.html](https://web.archive.org/web/20210106122515/https://magisterquis.github.io/2018/03/31/in-memory-only-elf-execution.html)  
 [http://syscall.sh/](https://web.archive.org/web/20201118151448/https://syscall.sh/)  
-  
 [http://blog.w4kfu.com/](https://web.archive.org/web/20210120041554/http://blog.w4kfu.com/)  
-
 [http://github.com/MrCheeze/pokered-self-replicator](https://web.archive.org/web/20200917104402/https://github.com/MrCheeze/pokered-self-replicator)  
 [http://www.exploit-db.com/papers?author=8947](https://web.archive.org/web/20190412213220/https://www.exploit-db.com/papers?author=8947)  
 [http://github.com/pallada-92/dna-3d-engine](https://web.archive.org/web/20201212225245/https://github.com/pallada-92/dna-3d-engine)  
 [http://s01den.github.io/](https://web.archive.org/web/20210226022708/https://s01den.github.io/)  
-[http:https://n0.lol/ebm/1.html](https://n0.lol/ebm/1.html)  
-[http:https://n0.lol/ebm/2.html](https://n0.lol/ebm/2.html)  
-[http:https://n0.lol/ebm/3.html](https://n0.lol/ebm/3.html)  
-[http:https://n0.lol/ebm/4.html](https://n0.lol/ebm/4.html)  
 [http:https://labs.portcullis.co.uk/blog/fixing-the-links-hardening-the-linker/](https://labs.portcullis.co.uk/blog/fixing-the-links-hardening-the-linker/)  
 [http:http://www.nth-dimension.org.uk/pub/BTL.pdf](http://www.nth-dimension.org.uk/pub/BTL.pdf)  
-
-
